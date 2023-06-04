@@ -99,8 +99,6 @@ function checkFirstDiagonal(value){
 }
 function checkSecondDiagonal(value){
     for(let j=2;j<7;j+=2){
-        console.log("---------------")
-        console.log(Array.from(cells)[j])
         if(Array.from(cells)[j].textContent!=value){
             return false;
         }
