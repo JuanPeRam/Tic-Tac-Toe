@@ -4,6 +4,7 @@ const startButton = document.getElementById("start-button")
 const menu = document.getElementById("menu")
 const displayText = document.getElementById("text-display")
 var currentTurn = "X"
+var finished = false
 
 clickableCells.forEach(cell => {
     cell.addEventListener('click',function(){
@@ -21,6 +22,8 @@ function startGame(){
         cell.textContent = ""
         cell.classList.add("clickable")
         menu.style.display = "none"
+        finished = false
+        currentTurn = "X"
     })
 }
 
@@ -33,7 +36,7 @@ function cellClicked(cell){
     if(checkWin(cell)){
         showMenu(cell.textContent+" Wins")
     }
-    if(noEmptyCells()){
+    else if(noEmptyCells()){
         showMenu("Draw")
     }
 
@@ -53,6 +56,7 @@ function noEmptyCells(){
 function showMenu(message){
     menu.style.display = "flex"
     displayText.textContent = message
+    finished = true
 }
 
 function checkWin(clickedCell){
@@ -109,11 +113,24 @@ function changeTurn(cell){
     if(currentTurn === "X"){
         cell.style.color = "yellow"
         currentTurn = "0"
+        if(!finished) cellClicked(getRandomCell());
     }
     else {
         currentTurn = "X"
         cell.style.color = "red"
     }
+}
+
+function getRandomCell(){
+    let clickableCellsAux = document.querySelectorAll(".clickable")
+    let array = Array.from(clickableCellsAux)
+    if (array.length > 0) {
+        let randomNuber = Math.floor(Math.random() * array.length)
+        let cell = array[randomNuber]
+        return cell;
+      } else {
+        return null;
+      }
 }
 //Footer text set
 const creatorName = "Juan Pereira"
